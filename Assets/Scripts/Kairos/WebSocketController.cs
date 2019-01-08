@@ -3,8 +3,7 @@
 namespace Kairos {
     public class WebSocketController {
 
-        public WebSocket Socket;
-        public Packet Packet;
+        private WebSocket Socket;
         public Remote Remote;
 
         public WebSocketController(string url) {
@@ -44,6 +43,10 @@ namespace Kairos {
 
         public void Close() {
             Socket.Close();
+        }
+
+        public Remote GetRemote() {
+            return Remote;
         }
     }
 }

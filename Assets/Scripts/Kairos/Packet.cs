@@ -25,6 +25,7 @@ namespace Kairos {
         public byte[] SendLogin(string name) {
             PacketWriter writer = new PacketWriter((int)PacketId.CS_LOGIN);
             writer.WriteString(name);
+            writer.WriteInt8((byte)20);
 
             return writer.GetData();
         }
@@ -32,6 +33,7 @@ namespace Kairos {
         // Read Packet
         private void ReceiveLogin(int packetId, PacketReader reader) {
             string name = reader.ReadString();
+            int age = reader.ReadInt8();
 
             UnityEngine.Debug.Log("Hello, " + name);
         }
