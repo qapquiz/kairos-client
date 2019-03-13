@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace Kairos {
     public class PacketReader {
-        private MemoryStream _stream;
-        private BinaryReader _reader;
+        private readonly MemoryStream _stream;
+        private readonly BinaryReader _reader;
 
         public PacketReader(byte[] data) {
             _stream = new MemoryStream(data);
@@ -63,19 +63,21 @@ namespace Kairos {
         }
 
         public string ReadString() {
-            List<byte> bytes = new List<byte>();
+            byte[] bytes = new byte[] { };
+            int index = 0;
 
             while (true) {
                 var charCode = _reader.ReadByte();
 
-                bytes.Add(charCode);
-
                 if (charCode == 0b_0000_0000) {
                     break;
                 }
+
+                bytes[index] = charCode;
+                index++;
             }
 
-            return Encoding.UTF8.GetString(bytes.ToArray());
+            return Encoding.UTF8.GetString(bytes);
         }
 
         public bool ReadBoolean() {
